@@ -26,9 +26,12 @@ class ofxFTGLFont
 
         virtual ofRectangle getStringBoundingBox(wstring s, float x, float y);
         virtual ofRectangle getStringBoundingBox(string s, float x, float y);
-        float stringHeight(string c);
-        float stringWidth(string c);
-		float getSpaceSize();
+        float stringWidth(wstring s);
+        float stringWidth(string s);
+        float stringHeight(wstring s);
+        float stringHeight(string s);
+        float getSpaceSize();
+    
         virtual void drawString(wstring s, float x, float y);
         virtual void drawString(string s, float x, float y);
 

@@ -26,7 +26,7 @@ bool ofxFTGLSimpleLayout::loadFont(string filename, float fontsize, float depth,
     if (ofxFTGLFont::loadFont(filename, fontsize, depth, bUsePolygons)) {
         layout = new FTSimpleLayout();
         layout->SetFont(font);
-    
+        
         return true;
     }
     

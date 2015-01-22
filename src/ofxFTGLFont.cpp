@@ -60,21 +60,39 @@ float ofxFTGLFont::getSpaceSize(){
 	return stringWidth(" ");
 }
 
-float ofxFTGLFont::stringWidth(string c)
+float ofxFTGLFont::stringWidth(wstring s)
 {
-    if (c.compare(" ") == 0) {
+    if (s.compare(L" ") == 0) {
         // FTGL won't measure a space width properly, so we
         // have to use this hack to get that value.
         return (stringWidth("A A") - stringWidth("AA"));
     }
     else {
-        ofRectangle rect = getStringBoundingBox(c, 0,0);
+        ofRectangle rect = getStringBoundingBox(s, 0,0);
         return rect.width;
     }
 }
 
-float ofxFTGLFont::stringHeight(string c) {
-    ofRectangle rect = getStringBoundingBox(c, 0,0);
+float ofxFTGLFont::stringWidth(string s)
+{
+    if (s.compare(" ") == 0) {
+        // FTGL won't measure a space width properly, so we
+        // have to use this hack to get that value.
+        return (stringWidth("A A") - stringWidth("AA"));
+    }
+    else {
+        ofRectangle rect = getStringBoundingBox(s, 0,0);
+        return rect.width;
+    }
+}
+
+float ofxFTGLFont::stringHeight(wstring s) {
+    ofRectangle rect = getStringBoundingBox(s, 0,0);
+    return rect.height;
+}
+
+float ofxFTGLFont::stringHeight(string s) {
+    ofRectangle rect = getStringBoundingBox(s, 0,0);
     return rect.height;
 }
 
