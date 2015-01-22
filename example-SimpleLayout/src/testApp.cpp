@@ -45,6 +45,9 @@ void testApp::draw()
     
     ofSetColor(0);
 	layoutText.drawString(str, margin, 120);
+    
+    ofNoFill();
+    ofRect(layoutText.getStringBoundingBox(str, margin, 120));
 }
 
 //--------------------------------------------------------------

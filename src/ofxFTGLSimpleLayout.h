@@ -27,10 +27,10 @@ class ofxFTGLSimpleLayout
         void drawString(wstring s, float x, float y);
         void drawString(string s, float x, float y);
 
-        float       getLineLength() const;
-        void        setLineLength(float length);
-        float       getLineSpacing() const;
-        void		setLineSpacing(float spacing);
+        float getLineLength() const;
+        void setLineLength(float length);
+        float getLineSpacing() const;
+        void setLineSpacing(float spacing);
 
         ofxFTGLTextAlignment getAlignment() const;
         void setAlignment(ofxFTGLTextAlignment alignment);

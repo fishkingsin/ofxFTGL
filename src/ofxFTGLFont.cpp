@@ -158,7 +158,7 @@ float ofxFTGLFont::getXHeight() const
 ofRectangle ofxFTGLFont::getStringBoundingBox(string s, float x, float y){
     if(loaded){
     	FTBBox bbox = font->BBox(s.c_str(), -1, FTPoint(), trackingPoint);
-	    return ofRectangle(x + bbox.Lower().Xf(), y + bbox.Lower().Yf(), bbox.Upper().Xf(), bbox.Upper().Yf());
+	    return ofRectangle(x + bbox.Lower().Xf(), y - bbox.Upper().Yf(), bbox.Upper().Xf(), bbox.Upper().Yf() - bbox.Lower().Yf());
     }
 	return ofRectangle();
 }
@@ -166,7 +166,7 @@ ofRectangle ofxFTGLFont::getStringBoundingBox(string s, float x, float y){
 ofRectangle ofxFTGLFont::getStringBoundingBox(wstring s, float x, float y){
     if(loaded){
     	FTBBox bbox = font->BBox((wchar_t*)s.c_str(), -1, FTPoint(), trackingPoint);
-	    return ofRectangle(x + bbox.Lower().Xf(), y + bbox.Lower().Yf(), bbox.Upper().Xf(), bbox.Upper().Yf());
+	    return ofRectangle(x + bbox.Lower().Xf(), y - bbox.Upper().Yf(), bbox.Upper().Xf(), bbox.Upper().Yf() - bbox.Lower().Yf());
     }
 	return ofRectangle();
 }
