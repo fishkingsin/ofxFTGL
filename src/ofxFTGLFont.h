@@ -16,8 +16,8 @@ class ofxFTGLFont
         void setSize(int size);
         int getSize();
     
-        void setTracking(float tracking);
-        float getTracking() const;
+        void setLetterSpacing(float letterSpacing);
+        float getLetterSpacing() const;
 
         float getLineHeight() const;
         float getAscender() const;

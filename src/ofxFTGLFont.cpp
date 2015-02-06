@@ -113,12 +113,12 @@ int ofxFTGLFont::getSize(){
 	return 0;
 }
 
-void ofxFTGLFont::setTracking(float tracking)
+void ofxFTGLFont::setLetterSpacing(float letterSpacing)
 {
-    trackingPoint.X(tracking);
+    trackingPoint.X(letterSpacing);
 }
 
-float ofxFTGLFont::getTracking() const
+float ofxFTGLFont::getLetterSpacing() const
 {
     return trackingPoint.Xf();
 }
