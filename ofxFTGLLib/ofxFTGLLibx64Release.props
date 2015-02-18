@@ -10,7 +10,7 @@
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>..\..\..\addons\ofxFTGL\libs\FTGL\lib\vs64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ftgl_static.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib />
     <Lib />
