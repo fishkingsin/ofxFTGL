@@ -56,6 +56,41 @@ bool ofxFTGLFont::loadFont(string filename, float fontsize, float depth, bool bU
     return true;
 }
 
+bool ofxFTGLFont::loadFont(ofBuffer& buffer, float fontsize, float depth, bool bUsePolygons)
+{
+    unload();
+    
+    fontsize *= 2;
+    
+    if (depth != 0) {
+        font = new FTExtrudeFont((unsigned char *)buffer.getBinaryBuffer(), buffer.size());
+        font->Depth(depth);
+    }
+    else if (bUsePolygons) {
+        font = new FTPolygonFont((unsigned char *)buffer.getBinaryBuffer(), buffer.size());
+    }
+    else {
+        font = new FTTextureFont((unsigned char *)buffer.getBinaryBuffer(), buffer.size());
+    }
+    
+    font->CharMap(ft_encoding_unicode);
+    
+    if(font->Error()){
+        ofLogError("ofxFTGLFont") << "Error loading font from buffer";
+        delete font;
+        return false;
+    }
+    
+    if(!font->FaceSize(fontsize)){
+        ofLogError("ofxFTGLFont") << "Failed to set font size";
+        delete font;
+        return false;
+    }
+    
+    loaded = true;
+    return true;
+}
+
 float ofxFTGLFont::getSpaceSize(){
 	return stringWidth(" ");
 }

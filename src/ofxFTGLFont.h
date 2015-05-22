@@ -11,6 +11,7 @@ class ofxFTGLFont
 
         virtual void unload();
         virtual bool loadFont(string filename, float fontsize, float depth = 0, bool bUsePolygons = false);
+        virtual bool loadFont(ofBuffer& buffer, float fontsize, float depth = 0, bool bUsePolygons = false);
         bool isLoaded();
 
         void setSize(int size);

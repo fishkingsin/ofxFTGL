@@ -33,6 +33,18 @@ bool ofxFTGLSimpleLayout::loadFont(string filename, float fontsize, float depth,
     return false;
 }
 
+bool ofxFTGLSimpleLayout::loadFont(ofBuffer& buffer, float fontsize, float depth, bool bUsePolygons)
+{
+    if (ofxFTGLFont::loadFont(buffer, fontsize, depth, bUsePolygons)) {
+        layout = new FTSimpleLayout();
+        layout->SetFont(font);
+        
+        return true;
+    }
+    
+    return false;
+}
+
 float ofxFTGLSimpleLayout::getLineLength() const
 {
 	return layout->GetLineLength();

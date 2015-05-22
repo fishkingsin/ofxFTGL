@@ -20,6 +20,7 @@ class ofxFTGLSimpleLayout
 
         void unload();
         bool loadFont(string filename, float fontsize = 10, float depth = 0, bool bUsePolygons = false);
+        bool loadFont(ofBuffer& buffer, float fontsize = 10, float depth = 0, bool bUsePolygons = false);
 
         ofRectangle getStringBoundingBox(wstring s, float x, float y);
         ofRectangle getStringBoundingBox(string s, float x, float y);
