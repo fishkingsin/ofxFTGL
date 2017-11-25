@@ -1,6 +1,7 @@
 /*
  * FTGL - OpenGL font library
  *
+ * Copyright (c) 2001-2004 Henry Maddocks <ftgl@opengl.geek.nz>
  * Copyright (c) 2008 Sam Hocevar <sam@zoy.org>
  *
  * Permission is hereby granted, free of charge, to any person obtaining
@@ -23,47 +24,46 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#ifndef __ftgl__
-#   warning Please use <FTGL/ftgl.h> instead of <FTBufferGlyph.h>.
-#   include <FTGL/ftgl.h>
-#endif
+#ifndef __FTExtrudeGlyphImpl__
+#define __FTExtrudeGlyphImpl__
 
-#ifndef __FTBufferGlyph__
-#define __FTBufferGlyph__
+#include "FTGlyphImpl.h"
 
-#ifdef __cplusplus
+class FTVectoriser;
 
-
-/**
- * FTBufferGlyph is a specialisation of FTGlyph for memory buffer rendering.
- */
-class FTGL_EXPORT FTBufferGlyph : public FTGlyph
+class FTExtrudeGlyphImpl : public FTGlyphImpl
 {
-    public:
+    friend class FTExtrudeGlyph;
+
+    protected:
+        FTExtrudeGlyphImpl(FT_GlyphSlot glyph, float depth, float frontOutset,
+                           float backOutset, bool useDisplayList);
+
+        virtual ~FTExtrudeGlyphImpl();
+
+        virtual const FTPoint& RenderImpl(const FTPoint& pen, int renderMode);
+
+    private:
         /**
-         * Constructor
-         *
-         * @param glyph The Freetype glyph to be processed
-         * @param buffer  An FTBuffer object in which to render the glyph.
+         * Private rendering methods.
          */
-        FTBufferGlyph(FT_GlyphSlot glyph, FTBuffer *buffer);
+        void RenderFront();
+        void RenderBack();
+        void RenderSide();
 
         /**
-         * Destructor
+         * Private rendering variables.
          */
-        virtual ~FTBufferGlyph();
+        unsigned int hscale, vscale;
+        float depth;
+        float frontOutset, backOutset;
+        FTVectoriser *vectoriser;
 
         /**
-         * Render this glyph at the current pen position.
-         *
-         * @param pen  The current pen position.
-         * @param renderMode  Render mode to display
-         * @return  The advance distance for this glyph.
+         * OpenGL display list
          */
-        virtual const FTPoint& Render(const FTPoint& pen, int renderMode);
+        GLuint glList;
 };
 
-#endif //__cplusplus
-
-#endif  //  __FTBufferGlyph__
+#endif  //  __FTExtrudeGlyphImpl__
 

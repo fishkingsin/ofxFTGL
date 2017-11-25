@@ -1,6 +1,7 @@
 /*
  * FTGL - OpenGL font library
  *
+ * Copyright (c) 2001-2004 Henry Maddocks <ftgl@opengl.geek.nz>
  * Copyright (c) 2008 Sam Hocevar <sam@zoy.org>
  *
  * Permission is hereby granted, free of charge, to any person obtaining
@@ -23,47 +24,37 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#ifndef __ftgl__
-#   warning Please use <FTGL/ftgl.h> instead of <FTBufferGlyph.h>.
-#   include <FTGL/ftgl.h>
-#endif
+#ifndef __FTPixmapFontImpl__
+#define __FTPixmapFontImpl__
 
-#ifndef __FTBufferGlyph__
-#define __FTBufferGlyph__
+#include "FTFontImpl.h"
 
-#ifdef __cplusplus
+class FTGlyph;
 
-
-/**
- * FTBufferGlyph is a specialisation of FTGlyph for memory buffer rendering.
- */
-class FTGL_EXPORT FTBufferGlyph : public FTGlyph
+class FTPixmapFontImpl : public FTFontImpl
 {
-    public:
-        /**
-         * Constructor
-         *
-         * @param glyph The Freetype glyph to be processed
-         * @param buffer  An FTBuffer object in which to render the glyph.
-         */
-        FTBufferGlyph(FT_GlyphSlot glyph, FTBuffer *buffer);
+    friend class FTPixmapFont;
 
-        /**
-         * Destructor
-         */
-        virtual ~FTBufferGlyph();
+    protected:
+        FTPixmapFontImpl(FTFont *ftFont, const char* fontFilePath);
 
-        /**
-         * Render this glyph at the current pen position.
-         *
-         * @param pen  The current pen position.
-         * @param renderMode  Render mode to display
-         * @return  The advance distance for this glyph.
-         */
-        virtual const FTPoint& Render(const FTPoint& pen, int renderMode);
+        FTPixmapFontImpl(FTFont *ftFont, const unsigned char *pBufferBytes,
+                         size_t bufferSizeInBytes);
+
+        virtual FTPoint Render(const char *s, const int len,
+                               FTPoint position, FTPoint spacing,
+                               int renderMode);
+
+        virtual FTPoint Render(const wchar_t *s, const int len,
+                               FTPoint position, FTPoint spacing,
+                               int renderMode);
+
+    private:
+        /* Internal generic Render() implementation */
+        template <typename T>
+        inline FTPoint RenderI(const T *s, const int len,
+                               FTPoint position, FTPoint spacing, int mode);
 };
 
-#endif //__cplusplus
-
-#endif  //  __FTBufferGlyph__
+#endif  //  __FTPixmapFontImpl__
 

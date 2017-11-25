@@ -23,47 +23,30 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#ifndef __ftgl__
-#   warning Please use <FTGL/ftgl.h> instead of <FTBufferGlyph.h>.
-#   include <FTGL/ftgl.h>
-#endif
+#ifndef __FTBufferGlyphImpl__
+#define __FTBufferGlyphImpl__
 
-#ifndef __FTBufferGlyph__
-#define __FTBufferGlyph__
+#include "FTGlyphImpl.h"
 
-#ifdef __cplusplus
-
-
-/**
- * FTBufferGlyph is a specialisation of FTGlyph for memory buffer rendering.
- */
-class FTGL_EXPORT FTBufferGlyph : public FTGlyph
+class FTBufferGlyphImpl : public FTGlyphImpl
 {
-    public:
-        /**
-         * Constructor
-         *
-         * @param glyph The Freetype glyph to be processed
-         * @param buffer  An FTBuffer object in which to render the glyph.
-         */
-        FTBufferGlyph(FT_GlyphSlot glyph, FTBuffer *buffer);
+    friend class FTBufferGlyph;
 
-        /**
-         * Destructor
-         */
-        virtual ~FTBufferGlyph();
+    protected:
+        FTBufferGlyphImpl(FT_GlyphSlot glyph, FTBuffer *p);
 
-        /**
-         * Render this glyph at the current pen position.
-         *
-         * @param pen  The current pen position.
-         * @param renderMode  Render mode to display
-         * @return  The advance distance for this glyph.
-         */
-        virtual const FTPoint& Render(const FTPoint& pen, int renderMode);
+        virtual ~FTBufferGlyphImpl();
+
+        virtual const FTPoint& RenderImpl(const FTPoint& pen, int renderMode);
+
+    private:
+        bool has_bitmap;
+        FT_Bitmap bitmap;
+        unsigned char *pixels;
+        FTPoint corner;
+
+        FTBuffer *buffer;
 };
 
-#endif //__cplusplus
-
-#endif  //  __FTBufferGlyph__
+#endif  //  __FTBufferGlyphImpl__
 

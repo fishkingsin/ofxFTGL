@@ -1,6 +1,7 @@
 /*
  * FTGL - OpenGL font library
  *
+ * Copyright (c) 2001-2004 Henry Maddocks <ftgl@opengl.geek.nz>
  * Copyright (c) 2008 Sam Hocevar <sam@zoy.org>
  *
  * Permission is hereby granted, free of charge, to any person obtaining
@@ -23,47 +24,48 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#ifndef __ftgl__
-#   warning Please use <FTGL/ftgl.h> instead of <FTBufferGlyph.h>.
-#   include <FTGL/ftgl.h>
-#endif
+#ifndef __FTBitmapGlyphImpl__
+#define __FTBitmapGlyphImpl__
 
-#ifndef __FTBufferGlyph__
-#define __FTBufferGlyph__
+#include "FTGlyphImpl.h"
 
-#ifdef __cplusplus
-
-
-/**
- * FTBufferGlyph is a specialisation of FTGlyph for memory buffer rendering.
- */
-class FTGL_EXPORT FTBufferGlyph : public FTGlyph
+class FTBitmapGlyphImpl : public FTGlyphImpl
 {
-    public:
+    friend class FTBitmapGlyph;
+
+    protected:
+        FTBitmapGlyphImpl(FT_GlyphSlot glyph);
+
+        virtual ~FTBitmapGlyphImpl();
+
+        virtual const FTPoint& RenderImpl(const FTPoint& pen, int renderMode);
+
+    private:
         /**
-         * Constructor
-         *
-         * @param glyph The Freetype glyph to be processed
-         * @param buffer  An FTBuffer object in which to render the glyph.
+         * The width of the glyph 'image'
          */
-        FTBufferGlyph(FT_GlyphSlot glyph, FTBuffer *buffer);
+        unsigned int destWidth;
 
         /**
-         * Destructor
+         * The height of the glyph 'image'
          */
-        virtual ~FTBufferGlyph();
+        unsigned int destHeight;
 
         /**
-         * Render this glyph at the current pen position.
-         *
-         * @param pen  The current pen position.
-         * @param renderMode  Render mode to display
-         * @return  The advance distance for this glyph.
+         * The pitch of the glyph 'image'
          */
-        virtual const FTPoint& Render(const FTPoint& pen, int renderMode);
+        unsigned int destPitch;
+
+        /**
+         * Vector from the pen position to the topleft corner of the bitmap
+         */
+        FTPoint pos;
+
+        /**
+         * Pointer to the 'image' data
+         */
+        unsigned char* data;
 };
 
-#endif //__cplusplus
-
-#endif  //  __FTBufferGlyph__
+#endif  //  __FTBitmapGlyphImpl__
 

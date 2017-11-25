@@ -36,7 +36,7 @@ void testApp::draw()
 {
 	ofBackground(255);
 	
-    ofSetColor(128);
+    ofSetColor(128,0,0);
     layoutInfo.drawString("FPS: " + ofToString(ofGetFrameRate(), 2) + "\n" +
                           "Line Length (Mouse X): " + ofToString(layoutText.getLineLength()) + "\n" +
                           "Line Spacing (Mouse Y): " + ofToString(layoutText.getLineSpacing()) + "\n" +

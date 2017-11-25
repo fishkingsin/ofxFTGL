@@ -1,6 +1,7 @@
 /*
  * FTGL - OpenGL font library
  *
+ * Copyright (c) 2001-2004 Henry Maddocks <ftgl@opengl.geek.nz>
  * Copyright (c) 2008 Sam Hocevar <sam@zoy.org>
  *
  * Permission is hereby granted, free of charge, to any person obtaining
@@ -23,47 +24,41 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#ifndef __ftgl__
-#   warning Please use <FTGL/ftgl.h> instead of <FTBufferGlyph.h>.
-#   include <FTGL/ftgl.h>
-#endif
+#ifndef __FTGlyphImpl__
+#define __FTGlyphImpl__
 
-#ifndef __FTBufferGlyph__
-#define __FTBufferGlyph__
+#include "FTGL/ftgl.h"
 
-#ifdef __cplusplus
-
-
-/**
- * FTBufferGlyph is a specialisation of FTGlyph for memory buffer rendering.
- */
-class FTGL_EXPORT FTBufferGlyph : public FTGlyph
+class FTGlyphImpl
 {
-    public:
-        /**
-         * Constructor
-         *
-         * @param glyph The Freetype glyph to be processed
-         * @param buffer  An FTBuffer object in which to render the glyph.
-         */
-        FTBufferGlyph(FT_GlyphSlot glyph, FTBuffer *buffer);
+    friend class FTGlyph;
+
+    protected:
+        FTGlyphImpl(FT_GlyphSlot glyph, bool useDisplayList = true);
+
+        virtual ~FTGlyphImpl();
+
+        float Advance() const;
+
+        const FTBBox& BBox() const;
+
+        FT_Error Error() const;
 
         /**
-         * Destructor
+         * The advance distance for this glyph
          */
-        virtual ~FTBufferGlyph();
+        FTPoint advance;
 
         /**
-         * Render this glyph at the current pen position.
-         *
-         * @param pen  The current pen position.
-         * @param renderMode  Render mode to display
-         * @return  The advance distance for this glyph.
+         * The bounding box of this glyph.
          */
-        virtual const FTPoint& Render(const FTPoint& pen, int renderMode);
+        FTBBox bBox;
+
+        /**
+         * Current error code. Zero means no error.
+         */
+        FT_Error err;
 };
 
-#endif //__cplusplus
-
-#endif  //  __FTBufferGlyph__
+#endif  //  __FTGlyphImpl__
 

@@ -3,7 +3,6 @@
  *
  * Copyright (c) 2001-2004 Henry Maddocks <ftgl@opengl.geek.nz>
  * Copyright (c) 2008 Sam Hocevar <sam@zoy.org>
- * Copyright (c) 2008 Sean Morrison <learner@brlcad.org>
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -25,58 +24,58 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#ifndef __ftgl__
-#   warning This header is deprecated. Please use <FTGL/ftgl.h> from now.
-#   include <FTGL/ftgl.h>
-#endif
+#ifndef __FTExtrudeFontImpl__
+#define __FTExtrudeFontImpl__
 
-#ifndef __FTPixmapGlyph__
-#define __FTPixmapGlyph__
+#include "FTFontImpl.h"
 
-#ifdef __cplusplus
+class FTGlyph;
 
-
-/**
- * FTPixmapGlyph is a specialisation of FTGlyph for creating pixmaps.
- */
-class  FTGL_EXPORT FTPixmapGlyph : public FTGlyph
+class FTExtrudeFontImpl : public FTFontImpl
 {
-    public:
-        /**
-         * Constructor
-         *
-         * @param glyph The Freetype glyph to be processed
-         */
-        FTPixmapGlyph(FT_GlyphSlot glyph);
+    friend class FTExtrudeFont;
+
+    protected:
+        FTExtrudeFontImpl(FTFont *ftFont, const char* fontFilePath);
+
+        FTExtrudeFontImpl(FTFont *ftFont, const unsigned char *pBufferBytes,
+                          size_t bufferSizeInBytes);
 
         /**
-         * Destructor
+         * Set the extrusion distance for the font.
+         *
+         * @param d  The extrusion distance.
          */
-        virtual ~FTPixmapGlyph();
+        virtual void Depth(float d) { depth = d; }
 
         /**
-         * Render this glyph at the current pen position.
+         * Set the outset distance for the font. Only implemented by
+         * FTOutlineFont, FTPolygonFont and FTExtrudeFont
          *
-         * @param pen  The current pen position.
-         * @param renderMode  Render mode to display
-         * @return  The advance distance for this glyph.
+         * @param o  The outset distance.
          */
-        virtual const FTPoint& Render(const FTPoint& pen, int renderMode);
+        virtual void Outset(float o) { front = back = o; }
+
+        /**
+         * Set the outset distance for the font. Only implemented by
+         * FTExtrudeFont
+         *
+         * @param f  The front outset distance.
+         * @param b  The back outset distance.
+         */
+        virtual void Outset(float f, float b) { front = f; back = b; }
+
+    private:
+        /**
+         * The extrusion distance for the font.
+         */
+        float depth;
+
+        /**
+         * The outset distance (front and back) for the font.
+         */
+        float front, back;
 };
 
-#endif //__cplusplus
-
-FTGL_BEGIN_C_DECLS
-
-/**
- * Create a specialisation of FTGLglyph for creating pixmaps.
- *
- * @param glyph The Freetype glyph to be processed
- * @return  An FTGLglyph* object.
- */
-FTGL_EXPORT FTGLglyph *ftglCreatePixmapGlyph(FT_GlyphSlot glyph);
-
-FTGL_END_C_DECLS
-
-#endif  //  __FTPixmapGlyph__
+#endif // __FTExtrudeFontImpl__
 

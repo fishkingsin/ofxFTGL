@@ -1,6 +1,7 @@
 /*
  * FTGL - OpenGL font library
  *
+ * Copyright (c) 2001-2004 Henry Maddocks <ftgl@opengl.geek.nz>
  * Copyright (c) 2008 Sam Hocevar <sam@zoy.org>
  *
  * Permission is hereby granted, free of charge, to any person obtaining
@@ -23,47 +24,44 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#ifndef __ftgl__
-#   warning Please use <FTGL/ftgl.h> instead of <FTBufferGlyph.h>.
-#   include <FTGL/ftgl.h>
-#endif
+#ifndef __FTPixmapGlyphImpl__
+#define __FTPixmapGlyphImpl__
 
-#ifndef __FTBufferGlyph__
-#define __FTBufferGlyph__
+#include "FTGlyphImpl.h"
 
-#ifdef __cplusplus
-
-
-/**
- * FTBufferGlyph is a specialisation of FTGlyph for memory buffer rendering.
- */
-class FTGL_EXPORT FTBufferGlyph : public FTGlyph
+class FTPixmapGlyphImpl : public FTGlyphImpl
 {
-    public:
+    friend class FTPixmapGlyph;
+
+    protected:
+        FTPixmapGlyphImpl(FT_GlyphSlot glyph);
+
+        virtual ~FTPixmapGlyphImpl();
+
+        virtual const FTPoint& RenderImpl(const FTPoint& pen, int renderMode);
+
+    private:
         /**
-         * Constructor
-         *
-         * @param glyph The Freetype glyph to be processed
-         * @param buffer  An FTBuffer object in which to render the glyph.
+         * The width of the glyph 'image'
          */
-        FTBufferGlyph(FT_GlyphSlot glyph, FTBuffer *buffer);
+        int destWidth;
 
         /**
-         * Destructor
+         * The height of the glyph 'image'
          */
-        virtual ~FTBufferGlyph();
+        int destHeight;
 
         /**
-         * Render this glyph at the current pen position.
-         *
-         * @param pen  The current pen position.
-         * @param renderMode  Render mode to display
-         * @return  The advance distance for this glyph.
+         * Vector from the pen position to the topleft corner of the pixmap
          */
-        virtual const FTPoint& Render(const FTPoint& pen, int renderMode);
+        FTPoint pos;
+
+        /**
+         * Pointer to the 'image' data
+         */
+        unsigned char* data;
+
 };
 
-#endif //__cplusplus
-
-#endif  //  __FTBufferGlyph__
+#endif  //  __FTPixmapGlyphImpl__
 
